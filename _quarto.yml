@@ -1,15 +1,18 @@
 project:
   type: website
+  output-dir: docs
 
 website:
-  title: "Chris Carr's Blog"
+  title: "Chris Carr"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/chrisdavidcarr
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/chrisdavidcarr
+      - icon: linkedin
+        href: https://linkedin.com/in/chrisdavidcarr
 format:
   html:
     theme:
