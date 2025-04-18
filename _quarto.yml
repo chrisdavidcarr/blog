@@ -9,13 +9,14 @@ website:
       - about.qmd
       - icon: github
         href: https://github.com/chrisdavidcarr
-      - icon: twitter
-        href: https://twitter.com/chrisdavidcarr
+      - icon: twitter-x
+        href: https://x.com/chrisdavidcarr
       - icon: linkedin
         href: https://linkedin.com/in/chrisdavidcarr
 format:
   html:
     theme:
+      - flatly
       - cosmo
       - brand
     css: styles.css
