@@ -7,10 +7,12 @@ website:
   navbar:
     right:
       - about.qmd
+      - icon: linkedin
+        href: https://linkedin.com/in/chrisdavidcarr
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com/
+        href: https://github.com/chrisdavidcarr
+      - icon: twitter-x
+        href: https://x.com/chrisdavidcarr
 format:
   html:
     theme:
