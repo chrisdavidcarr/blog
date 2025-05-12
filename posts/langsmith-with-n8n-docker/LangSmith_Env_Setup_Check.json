@@ -1,0 +1,143 @@
+{
+  "name": "LangSmith Env Setup Check",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        -360
+      ],
+      "id": "17ab3b3f-c1d7-4a06-bbfb-d2b2701bc6df",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "console.log(\"\\nn8n can see the environment variables! Check them below:\\n\\n\" + $input.first().json.stdout)"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        -460
+      ],
+      "id": "c1e45a78-4968-44aa-98f0-f89dbae47c05",
+      "name": "Success"
+    },
+    {
+      "parameters": {
+        "jsCode": "console.log(\"\\nIt looks like you've used LANGGRAPH instead of LANGCHAIN in your environment variables. \\nUpdate them and try again!\")"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        -360
+      ],
+      "id": "a3f4a0c3-a6fe-415c-a5c2-a1c8f53b755c",
+      "name": "Warning"
+    },
+    {
+      "parameters": {
+        "jsCode": "console.log(\"\\nSomething's not right, n8n can't see the right environment variables.\")"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        -160
+      ],
+      "id": "e79b7249-07db-4c6c-9c44-7745c0786235",
+      "name": "Error"
+    },
+    {
+      "parameters": {
+        "command": "env | grep 'LANGCHAIN'"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -360
+      ],
+      "id": "cd8d6dc0-cd09-42eb-be2a-19ff137bcf7e",
+      "name": "Check For LANGCHAIN Variables",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "command": "env | grep 'LANGSMITH'"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        -260
+      ],
+      "id": "285872b0-d241-4275-b8a8-0404cf6572a2",
+      "name": "Check For LANGSMITH Variables",
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Check For LANGCHAIN Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check For LANGCHAIN Variables": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check For LANGSMITH Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check For LANGSMITH Variables": {
+      "main": [
+        [
+          {
+            "node": "Warning",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e50be52b-c76e-4cfb-b6ae-e9f503c7154d",
+  "meta": {
+    "instanceId": "ac63467607103d9c95dd644384984672b90b1cb03e07edbaf18fe72b2a6c45bb"
+  },
+  "id": "dS5pyEXNr5WJyuQn",
+  "tags": []
+}

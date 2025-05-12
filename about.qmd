@@ -1,0 +1,21 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter-x
+      text: X (Twitter)
+      href: https://x.com/chrisdavidcarr
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/chrisdavidcarr
+    - icon: github
+      text: Github
+      href: https://github.com/chrisdavidcarr
+
+---
+
+I'm a LLM developer and data professional based in Cardiff, United Kingdom. Like the majority of data scientists, I write code in Python. That being said, I also have an interest in building with low-code tools (particularly [n8n](https://n8n.io/creators/chriscarr)). I'm currently building a data analytics startup called Opinii.
+
+I'm also available for n8n projects (contact me on [LinkedIn](https://linkedin.com/in/chrisdavidcarr)).
