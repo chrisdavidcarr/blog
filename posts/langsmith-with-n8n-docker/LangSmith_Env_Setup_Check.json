@@ -27,7 +27,7 @@
     },
     {
       "parameters": {
-        "jsCode": "console.log(\"\\nIt looks like you've used LANGGRAPH instead of LANGCHAIN in your environment variables. \\nUpdate them and try again!\")"
+        "jsCode": "console.log(\"\\nIt looks like you've used LANGSMITH instead of LANGCHAIN in your environment variables. \\nUpdate them and try again!\")"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
