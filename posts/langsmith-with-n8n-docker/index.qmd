@@ -10,11 +10,11 @@ image: "image.jpg"
 
 Recently, I've been experimenting with using LangGraph to prototype LLM applications. While other observation tools exist (Arize Phoenix and MLflow, for example), LangChain's own offering - LangSmith - is easy to set up and thus worth trying out. 
 
-Since I'm still using n8n as part of my development flow, it makes sense to integrate LangSmith with my self-hosted n8n instance. This is supported in n8n since its AI agent nodes use LangChain.js under the hood.
+Since I'm still using n8n as part of my development flow, it makes sense to integrate LangSmith with my self-hosted n8n instance. This is supported in n8n since its `AI Agent` nodes use LangChain.js under the hood.
 
 I run a personal n8n instance on a DigitalOcean Droplet (using Docker Compose). It was set up using the instructions that can be found [here](https://docs.n8n.io/hosting/installation/server-setups/digital-ocean/).
 
-I'm documenting how I set it up since this is a common installation pattern, and I couldn't find any instructions for integrating LangChain with it.
+I'm documenting how I set it up since this I couldn't find any instructions for integrating LangChain with this common installation pattern.
 
 :::{.callout-important}
 This guide is for self-hosted n8n instances installed with Docker Compose. LangSmith integration is not currently supported in n8n Cloud.
@@ -37,7 +37,7 @@ cd n8n-docker-compose
 nano docker-compose.yml
 ```
 
-In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that the variable names are of the form `LANGCHAIN_` rather than `LANGSMITH_`. Use the appropriate endpoint for your data centre location (it will be the value that LangSmith shows as `LANGSMITH_ENDPOINT`). Feel free to use a different name for `LANGCHAIN_PROJECT`.
+In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that the variable names are of the form `LANGCHAIN_` rather than `LANGSMITH_`. Use the appropriate endpoint for your data centre location (it will be the value that LangSmith shows as `LANGSMITH_ENDPOINT`). Feel free to use any name for `LANGCHAIN_PROJECT` - I used 'n8n'.
 
 :::{.callout-important}
 Despite what it says on LangSmith's guide to setting up tracing, the environment variables must be of the form `LANGCHAIN_` (not `LANGSMITH_`).
@@ -59,7 +59,7 @@ n8n:
         - LANGCHAIN_ENDPOINT=https://api.smith.langchain.com # add this (use https://eu.api.smith.langchain.com if using the EU data centre)
         - LANGCHAIN_API_KEY=PASTE-LANGSMITH-KEY-HERE # add this
         - LANGCHAIN_TRACING_V2=true # add this
-        - LANGCHAIN_PROJECT=n8n # add this
+        - LANGCHAIN_PROJECT=YOUR-PROJECT-NAME # add this
 ```
 
 Save and exit out of this file. Then restart n8n by using the following commands:
@@ -69,11 +69,11 @@ sudo docker compose down
 sudo docker compose up -d
 ```
 
-## Verify Setup is Successful
+## Verify Setup Has Been Successful
 
 ### Optional Check Using n8n Workflow
 
-I put together a [small workflow](https://raw.githubusercontent.com/chrisdavidcarr/blog/refs/heads/main/posts/langsmith-with-n8n-docker/LangSmith_Env_Setup_Check.json) that checks to see whether n8n has visibility of the environment variables that were just added. To use it, right-click and click `Inspect` and then `Console`. Then run the workflow. If the setup has been successful, you'll see the following printed in the console:
+I put together a [small workflow](https://raw.githubusercontent.com/chrisdavidcarr/blog/refs/heads/main/posts/langsmith-with-n8n-docker/LangSmith_Env_Setup_Check.json) that checks to see whether n8n has visibility of the environment variables that were just added. To use it, right-click and select `Inspect` and then `Console`. Then run the workflow (you'll have to right-click somewhere on the page that isn't the workflow canvas). If the setup has been successful, you'll see the following printed in the console (with your values):
 
 ```bash
 n8n can see the environment variables! Check them below:

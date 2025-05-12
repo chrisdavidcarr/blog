@@ -192,9 +192,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Recently, I’ve been experimenting with using LangGraph to prototype LLM applications. While other observation tools exist (Arize Phoenix and MLflow, for example), LangChain’s own offering - LangSmith - is easy to set up and thus worth trying out.</p>
-<p>Since I’m still using n8n as part of my development flow, it makes sense to integrate LangSmith with my self-hosted n8n instance. This is supported in n8n since its AI agent nodes use LangChain.js under the hood.</p>
+<p>Since I’m still using n8n as part of my development flow, it makes sense to integrate LangSmith with my self-hosted n8n instance. This is supported in n8n since its <code>AI Agent</code> nodes use LangChain.js under the hood.</p>
 <p>I run a personal n8n instance on a DigitalOcean Droplet (using Docker Compose). It was set up using the instructions that can be found <a href="https://docs.n8n.io/hosting/installation/server-setups/digital-ocean/">here</a>.</p>
-<p>I’m documenting how I set it up since this is a common installation pattern, and I couldn’t find any instructions for integrating LangChain with it.</p>
+<p>I’m documenting how I set it up since this I couldn’t find any instructions for integrating LangChain with this common installation pattern.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -221,7 +221,7 @@ Important
 <p>In the command line of the server hosting your n8n, use the following commands to enter the directory containing n8n and open <code>docker-compose.yml</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> n8n-docker-compose</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> docker-compose.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that the variable names are of the form <code>LANGCHAIN_</code> rather than <code>LANGSMITH_</code>. Use the appropriate endpoint for your data centre location (it will be the value that LangSmith shows as <code>LANGSMITH_ENDPOINT</code>). Feel free to use a different name for <code>LANGCHAIN_PROJECT</code>.</p>
+<p>In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that the variable names are of the form <code>LANGCHAIN_</code> rather than <code>LANGSMITH_</code>. Use the appropriate endpoint for your data centre location (it will be the value that LangSmith shows as <code>LANGSMITH_ENDPOINT</code>). Feel free to use any name for <code>LANGCHAIN_PROJECT</code> - I used ‘n8n’.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -250,16 +250,16 @@ Important
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_ENDPOINT=https://api.smith.langchain.com <span class="co"># add this (use https://eu.api.smith.langchain.com if using the EU data centre)</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_API_KEY=PASTE-LANGSMITH-KEY-HERE <span class="co"># add this</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_TRACING_V2=true <span class="co"># add this</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_PROJECT=n8n <span class="co"># add this</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_PROJECT=YOUR-PROJECT-NAME <span class="co"># add this</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Save and exit out of this file. Then restart n8n by using the following commands:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose down</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose up <span class="at">-d</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="verify-setup-is-successful" class="level2">
-<h2 class="anchored" data-anchor-id="verify-setup-is-successful">Verify Setup is Successful</h2>
+<section id="verify-setup-has-been-successful" class="level2">
+<h2 class="anchored" data-anchor-id="verify-setup-has-been-successful">Verify Setup Has Been Successful</h2>
 <section id="optional-check-using-n8n-workflow" class="level3">
 <h3 class="anchored" data-anchor-id="optional-check-using-n8n-workflow">Optional Check Using n8n Workflow</h3>
-<p>I put together a <a href="https://raw.githubusercontent.com/chrisdavidcarr/blog/refs/heads/main/posts/langsmith-with-n8n-docker/LangSmith_Env_Setup_Check.json">small workflow</a> that checks to see whether n8n has visibility of the environment variables that were just added. To use it, right-click and click <code>Inspect</code> and then <code>Console</code>. Then run the workflow. If the setup has been successful, you’ll see the following printed in the console:</p>
+<p>I put together a <a href="https://raw.githubusercontent.com/chrisdavidcarr/blog/refs/heads/main/posts/langsmith-with-n8n-docker/LangSmith_Env_Setup_Check.json">small workflow</a> that checks to see whether n8n has visibility of the environment variables that were just added. To use it, right-click and select <code>Inspect</code> and then <code>Console</code>. Then run the workflow (you’ll have to right-click somewhere on the page that isn’t the workflow canvas). If the setup has been successful, you’ll see the following printed in the console (with your values):</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">n8n</span> can see the environment variables! Check them below:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">LANGCHAIN_API_KEY</span><span class="op">=</span>YOUR-LANGSMITH-API-KEY</span>
