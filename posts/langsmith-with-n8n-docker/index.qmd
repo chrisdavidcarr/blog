@@ -73,7 +73,7 @@ sudo docker compose up -d
 
 ### Optional Check Using n8n Workflow
 
-I put together a [small workflow](https://raw.githubusercontent.com/chrisdavidcarr/blog/refs/heads/main/posts/langsmith-with-n8n-docker/LangSmith_Env_Setup_Check.json) that checks to see whether n8n has visibility of the environment variables that were just added. To use it, right-click and select `Inspect` and then `Console`. Then run the workflow (you'll have to right-click somewhere on the page that isn't the workflow canvas). If the setup has been successful, you'll see the following printed in the console (with your values):
+I put together a [small workflow](https://raw.githubusercontent.com/chrisdavidcarr/blog/refs/heads/main/posts/langsmith-with-n8n-docker/LangSmith_Env_Setup_Check.json) that checks to see whether n8n has visibility of the environment variables that were just added. To use it, right-click and select `Inspect` and then `Console` (you'll have to right-click somewhere on the page that isn't the workflow canvas). Then run the workflow. If the setup has been successful, you'll see the following printed in the console (with your values):
 
 ```bash
 n8n can see the environment variables! Check them below:
