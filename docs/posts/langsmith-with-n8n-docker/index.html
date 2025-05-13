@@ -219,27 +219,14 @@ Important
 <section id="get-langsmith-api-key" class="level2">
 <h2 class="anchored" data-anchor-id="get-langsmith-api-key">Get LangSmith API Key</h2>
 <p>If you have not already done so, <a href="https://smith.langchain.com/?_gl=1*cmbfox*_ga*MTI1MjgxODU1NS4xNzQ2NjkzMTEz*_ga_47WX3HKKY2*czE3NDcwNjY2NTMkbzEzJGcwJHQxNzQ3MDY2NjUzJGowJGwwJGgw">sign up for a LangSmith account</a>. Note that there are two data regions to choose from - US and EU.</p>
-<p>In LangSmith, select <code>Set up tracing</code> and then <code>Generate API Key</code>. You will be able to see a series of environment variables (namely, <code>LANGSMITH_TRACING</code>, <code>LANGSMITH_ENDPOINT</code>, <code>LANGSMITH_API_KEY</code>, <code>LANGSMITH_PROJECT</code> and <code>OPENAI_API_KEY</code>). We will modify and add some of these to our Docker environment variables.</p>
+<p>In LangSmith, select <code>Set up tracing</code> and then <code>Generate API Key</code>. Select the TypeScript environment variables and you should be able to see the following values: <code>LANGSMITH_TRACING</code>, <code>LANGSMITH_ENDPOINT</code>, <code>LANGSMITH_API_KEY</code>, <code>LANGSMITH_PROJECT</code> and <code>OPENAI_API_KEY</code>.</p>
 </section>
 <section id="update-docker-compose-yaml-file" class="level2">
 <h2 class="anchored" data-anchor-id="update-docker-compose-yaml-file">Update Docker Compose YAML File</h2>
 <p>In the command line of the server hosting your n8n, use the following commands to enter the directory containing n8n and open <code>docker-compose.yml</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> n8n-docker-compose</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> docker-compose.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that the variable names are of the form <code>LANGCHAIN_</code> rather than <code>LANGSMITH_</code>. Use the appropriate endpoint for your data centre location (it will be the value that LangSmith shows as <code>LANGSMITH_ENDPOINT</code>). Feel free to use any name for <code>LANGCHAIN_PROJECT</code> - I used ‘n8n’.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Despite what it says on LangSmith’s guide to setting up tracing, the environment variables must be of the form <code>LANGCHAIN_</code> (not <code>LANGSMITH_</code>).</p>
-</div>
-</div>
+<p>In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that as of writing (May 2025), setting <code>LANGSMITH_PROJECT</code> doesn’t appear to work. However, setting <code>LANGCHAIN_PROJECT</code> does, so we’ll go with that.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">n8n:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">image:</span> docker.n8n.io/n8nio/n8n</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">restart:</span> always</span>
@@ -252,9 +239,9 @@ Important
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> NODE_ENV=production</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> WEBHOOK_URL=https://<span class="va">${SUBDOMAIN}</span>.<span class="va">${DOMAIN_NAME}</span>/</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> GENERIC_TIMEZONE=<span class="va">${GENERIC_TIMEZONE}</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_ENDPOINT=https://api.smith.langchain.com <span class="co"># add this (use https://eu.api.smith.langchain.com if using the EU data centre)</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_API_KEY=PASTE-LANGSMITH-KEY-HERE <span class="co"># add this</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_TRACING_V2=true <span class="co"># add this</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGSMITH_ENDPOINT=https://api.smith.langchain.com <span class="co"># add this (use https://eu.api.smith.langchain.com if using the EU data centre)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGSMITH_API_KEY=PASTE-LANGSMITH-KEY-HERE <span class="co"># add this</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGSMITH_TRACING=true <span class="co"># add this</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-</span> LANGCHAIN_PROJECT=YOUR-PROJECT-NAME <span class="co"># add this</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Save and exit out of this file. Then restart n8n by using the following commands:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose down</span>
@@ -267,11 +254,10 @@ Important
 <p>I put together a <a href="https://raw.githubusercontent.com/chrisdavidcarr/blog/refs/heads/main/posts/langsmith-with-n8n-docker/LangSmith_Env_Setup_Check.json">small workflow</a> that checks to see whether n8n has visibility of the environment variables that were just added. To use it, right-click and select <code>Inspect</code> and then <code>Console</code> (you’ll have to right-click somewhere on the page that isn’t the workflow canvas). Then run the workflow. If the setup has been successful, you’ll see the following printed in the console (with your values):</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">n8n</span> can see the environment variables! Check them below:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">LANGCHAIN_API_KEY</span><span class="op">=</span>YOUR-LANGSMITH-API-KEY</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">LANGCHAIN_TRACING_V2</span><span class="op">=</span>true</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="va">LANGCHAIN_ENDPOINT</span><span class="op">=</span>YOUR-ENDPOINT</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">LANGSMITH_API_KEY</span><span class="op">=</span>YOUR-LANGSMITH-API-KEY</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">LANGSMITH_TRACING</span><span class="op">=</span>true</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="va">LANGSMITH_ENDPOINT</span><span class="op">=</span>YOUR-ENDPOINT</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="va">LANGCHAIN_PROJECT</span><span class="op">=</span>YOUR-PROJECT-NAME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This workflow will also flag if you’ve used the <code>LANGSMITH_</code> pattern as opposed to the correct <code>LANGCHAIN_</code> variable prefix.</p>
 </section>
 <section id="test-by-calling-an-ai-node-in-n8n" class="level3">
 <h3 class="anchored" data-anchor-id="test-by-calling-an-ai-node-in-n8n">Test by Calling an AI Node in n8n</h3>

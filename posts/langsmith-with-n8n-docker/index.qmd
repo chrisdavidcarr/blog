@@ -26,7 +26,7 @@ This guide is for self-hosted n8n instances installed with Docker Compose. LangS
 
 If you have not already done so, [sign up for a LangSmith account](https://smith.langchain.com/?_gl=1*cmbfox*_ga*MTI1MjgxODU1NS4xNzQ2NjkzMTEz*_ga_47WX3HKKY2*czE3NDcwNjY2NTMkbzEzJGcwJHQxNzQ3MDY2NjUzJGowJGwwJGgw). Note that there are two data regions to choose from - US and EU.
 
-In LangSmith, select `Set up tracing` and then `Generate API Key`. You will be able to see a series of environment variables (namely, `LANGSMITH_TRACING`, `LANGSMITH_ENDPOINT`, `LANGSMITH_API_KEY`, `LANGSMITH_PROJECT` and `OPENAI_API_KEY`). We will modify and add some of these to our Docker environment variables.
+In LangSmith, select `Set up tracing` and then `Generate API Key`. Select the TypeScript environment variables and you should be able to see the following values: `LANGSMITH_TRACING`, `LANGSMITH_ENDPOINT`, `LANGSMITH_API_KEY`, `LANGSMITH_PROJECT` and `OPENAI_API_KEY`. 
 
 ## Update Docker Compose YAML File
 
@@ -37,11 +37,8 @@ cd n8n-docker-compose
 nano docker-compose.yml
 ```
 
-In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that the variable names are of the form `LANGCHAIN_` rather than `LANGSMITH_`. Use the appropriate endpoint for your data centre location (it will be the value that LangSmith shows as `LANGSMITH_ENDPOINT`). Feel free to use any name for `LANGCHAIN_PROJECT` - I used 'n8n'.
+In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that as of writing (May 2025), setting `LANGSMITH_PROJECT` doesn't appear to work. However, setting `LANGCHAIN_PROJECT` does, so we'll go with that.
 
-:::{.callout-important}
-Despite what it says on LangSmith's guide to setting up tracing, the environment variables must be of the form `LANGCHAIN_` (not `LANGSMITH_`).
-:::
 
 ```{.bash}
 n8n:
@@ -56,9 +53,9 @@ n8n:
         - NODE_ENV=production
         - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
         - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
-        - LANGCHAIN_ENDPOINT=https://api.smith.langchain.com # add this (use https://eu.api.smith.langchain.com if using the EU data centre)
-        - LANGCHAIN_API_KEY=PASTE-LANGSMITH-KEY-HERE # add this
-        - LANGCHAIN_TRACING_V2=true # add this
+        - LANGSMITH_ENDPOINT=https://api.smith.langchain.com # add this (use https://eu.api.smith.langchain.com if using the EU data centre)
+        - LANGSMITH_API_KEY=PASTE-LANGSMITH-KEY-HERE # add this
+        - LANGSMITH_TRACING=true # add this
         - LANGCHAIN_PROJECT=YOUR-PROJECT-NAME # add this
 ```
 
@@ -78,13 +75,11 @@ I put together a [small workflow](https://raw.githubusercontent.com/chrisdavidca
 ```bash
 n8n can see the environment variables! Check them below:
 
-LANGCHAIN_API_KEY=YOUR-LANGSMITH-API-KEY
-LANGCHAIN_TRACING_V2=true
-LANGCHAIN_ENDPOINT=YOUR-ENDPOINT
+LANGSMITH_API_KEY=YOUR-LANGSMITH-API-KEY
+LANGSMITH_TRACING=true
+LANGSMITH_ENDPOINT=YOUR-ENDPOINT
 LANGCHAIN_PROJECT=YOUR-PROJECT-NAME
 ```
-
-This workflow will also flag if you've used the `LANGSMITH_` pattern as opposed to the correct `LANGCHAIN_` variable prefix.
 
 ### Test by Calling an AI Node in n8n
 
