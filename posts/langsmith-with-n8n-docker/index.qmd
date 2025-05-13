@@ -37,8 +37,11 @@ cd n8n-docker-compose
 nano docker-compose.yml
 ```
 
-In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that as of writing (May 2025), setting `LANGSMITH_PROJECT` doesn't appear to work. However, setting `LANGCHAIN_PROJECT` does, so we'll go with that.
+In this file, we need to add the bottom four lines to the n8n environment subsection as shown below below . Make sure that the `LANGSMITH_ENDPOINT` matches the data centre that you've selected.
 
+:::{.callout-note}
+As of writing (May 2025), setting `LANGSMITH_PROJECT` doesn't appear to work. However, setting `LANGCHAIN_PROJECT` does, so we'll go with that.
+:::
 
 ```{.bash}
 n8n:

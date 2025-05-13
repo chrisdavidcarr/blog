@@ -226,7 +226,20 @@ Important
 <p>In the command line of the server hosting your n8n, use the following commands to enter the directory containing n8n and open <code>docker-compose.yml</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> n8n-docker-compose</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> docker-compose.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this file, we need to add the bottom four lines from below to the n8n environment subsection. Note that as of writing (May 2025), setting <code>LANGSMITH_PROJECT</code> doesn’t appear to work. However, setting <code>LANGCHAIN_PROJECT</code> does, so we’ll go with that.</p>
+<p>In this file, we need to add the bottom four lines to the n8n environment subsection as shown below below . Make sure that the <code>LANGSMITH_ENDPOINT</code> matches the data centre that you’ve selected.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As of writing (May 2025), setting <code>LANGSMITH_PROJECT</code> doesn’t appear to work. However, setting <code>LANGCHAIN_PROJECT</code> does, so we’ll go with that.</p>
+</div>
+</div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">n8n:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">image:</span> docker.n8n.io/n8nio/n8n</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">restart:</span> always</span>
