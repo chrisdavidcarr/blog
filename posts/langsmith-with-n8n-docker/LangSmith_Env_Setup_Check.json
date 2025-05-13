@@ -36,7 +36,7 @@
         -280
       ],
       "id": "cd8d6dc0-cd09-42eb-be2a-19ff137bcf7e",
-      "name": "Check For LANGCHAIN Variables",
+      "name": "Check For Environment Variables",
       "onError": "continueErrorOutput"
     },
     {
